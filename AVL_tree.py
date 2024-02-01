@@ -73,23 +73,23 @@ def right_rotate(y):
     x.height = 1 + max(get_height(x.left), get_height(x.right))
     return x
 
-def min_value_node(node):
+def min_value_of_subtree(node):
     current = node
     while current.left is not None:
         current = current.left
-    return current
+    return current.key
 
-def max_value_node(node):
+def max_value_of_subtree(node):
     current = node
     while current.right is not None:
         current = current.right
-    return current
+    return current.key
 
-def sum_nodes_values(root):
+def sum_of_subtree_values(root):
     if root is None:
         return 0
     if root:
-	    return sum_nodes_values(root.left) + sum_nodes_values(root.right) + root.key   
+	    return sum_of_subtree_values(root.left) + sum_of_subtree_values(root.right) + root.key   
 
 def insert_node(root, key):
     if not root:
@@ -140,9 +140,9 @@ def delete_node(root, key):
             root = None
             return temp
 
-        temp = min_value_node(root.right)
-        root.key = temp.key
-        root.right = delete_node(root.right, temp.key)
+        temp_key = min_value_of_subtree(root.right)
+        root.key = temp_key
+        root.right = delete_node(root.right, temp_key)
 
     if root is None:
         return root
@@ -178,8 +178,8 @@ if __name__ == "__main__":
     for key in keys_to_delete:
         root = delete_node(root, key)
 
-    print(f"Найменше значення у дереві: {min_value_node(root).key}")
-    print(f"Найбільше значення у дереві: {max_value_node(root).key}")
-    print(f"Сума всіх значень у дереві: {sum_nodes_values(root)}")
+    print(f"Найменше значення у дереві: {min_value_of_subtree(root)}")
+    print(f"Найбільше значення у дереві: {max_value_of_subtree(root)}")
+    print(f"Сума всіх значень у дереві: {sum_of_subtree_values(root)}")
 
     draw_tree(root)    
